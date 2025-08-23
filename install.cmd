@@ -6,56 +6,65 @@ echo ========================================
 :: Enable UTF-8
 chcp 65001
 
+:: Global winget install flags
+set WINGET_INSTALL=winget install -e --accept-package-agreements --accept-source-agreements --id
+
 :: Update Winget Sources
 echo 🔄 Updating winget sources...
 winget source update
 
 :: Install Git
 echo 🧬 Installing Git...
-winget install --id Git.Git -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% Git.Git
 
 :: Install Ruby
 echo 💎 Installing Ruby...
-winget install --id RubyInstallerTeam.RubyWithDevKit.3.2 -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% RubyInstallerTeam.RubyWithDevKit.3.2
 
 :: Install LaTeX (MiKTeX)
 echo 📄 Installing LaTeX (MiKTeX)...
-winget install --id MiKTeX.MiKTeX -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% MiKTeX.MiKTeX
 
 :: Install Neovim
 echo 🧠 Installing Neovim...
-winget install --id Neovim.Neovim -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% Neovim.Neovim
 
 :: Install SumatraPDF
 echo 📘 Installing SumatraPDF...
-winget install --id SumatraPDF.SumatraPDF -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% SumatraPDF.SumatraPDF
 
-:: Insall developer command line and graphical tools 
+:: Install developer command line and graphical tools
+echo 🖥️ Installingbat...
+%WINGET_INSTALL% sharkdp.bat
+
 echo 🖥️ Installing Clink...
-winget install --id chrisant996.Clink  -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% chrisant996.Clink
 
-echo 🖥️ Installing Flameshot..
-winget install --id Flameshot.Flameshot -e --accept-package-agreements --accept-source-agreements
+echo Installing
+%WINGET_INSTALL% Flameshot.Flameshot
+
+echo 🖥️ Installg fd...
+%WINGET_INSTALL% sharkdp.fd
 
 echo 🖥️ Installing fzf...
-winget install --id junegunn.fzf  -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% junegunn.fzf
 
 echo 🖥️ Installing LazyGit...
-winget install --id JesseDuffield.lazygit  -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% JesseDuffield.lazygit
 
 echo 🖥️ Installing Microsoft PowerToys...
-winget install --id Microsoft.PowerToys  -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% Microsoft.PowerToys
 
 echo 🖥️ Installing ripgrep...
-winget install --id BurntSushi.ripgrep.MSVC -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% BurntSushi.ripgrep.MSVC
 
 :: Install Visual Studio Code
 echo 🖥️ Installing VS Code...
-winget install --id Microsoft.VisualStudioCode -e --accept-package-agreements --accept-source-agreements
+%WINGET_INSTALL% Microsoft.VisualStudioCode
 
 :: Optional: Install rbenv via Git clone (manual path setup needed)
 :: Git clone will require user to add rbenv to PATH manually via system settings
-REM echo 🔁 Cloning rbenv (optional; manual PATH setup required)
+REM echo Cloning optional; manual PATH setup required)
 REM git clone https://github.com/rbenv/rbenv.git %USERPROFILE%\.rbenv
 
 :: Instructions for VS Code Extensions (manual script-based install below)
@@ -70,13 +79,13 @@ call code --install-extension Neovim.vim
 
 echo ✅ VS Code extensions installed.
 
+:: Install Python 3
+echo 🐍 Installing Python 3...
+%WINGET_INSTALL% Python.Python.3
+
 :: Optional: Install Ruby gems (e.g., rake)
 echo 🔧 Installing Ruby rake gem...
 gem install rake
-
-:: Install Python 3
-echo 🐍 Installing Python 3...
-winget install --id Python.Python.3 -e --accept-package-agreements --accept-source-agreements
 
 :: Clone gits CLI
 echo 🧭 Cloning gits CLI...
@@ -90,7 +99,7 @@ call .venv\Scripts\activate.bat
 
 :: Install gits dependencies
 echo 📦 Installing gits dependencies...
-pip install --upgrade pip
+pythone -m pip install --upgrade pip
 pip install .
 
 echo ========================================
