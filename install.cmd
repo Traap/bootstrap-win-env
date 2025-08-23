@@ -30,6 +30,25 @@ winget install --id Neovim.Neovim -e --accept-package-agreements --accept-source
 echo 📘 Installing SumatraPDF...
 winget install --id SumatraPDF.SumatraPDF -e --accept-package-agreements --accept-source-agreements
 
+:: Insall developer command line and graphical tools 
+echo 🖥️ Installing Clink...
+winget install --id chrisant996.Clink  -e --accept-package-agreements --accept-source-agreements
+
+echo 🖥️ Installing Flameshot..
+winget install --id Flameshot.Flameshot -e --accept-package-agreements --accept-source-agreements
+
+echo 🖥️ Installing fzf...
+winget install --id junegunn.fzf  -e --accept-package-agreements --accept-source-agreements
+
+echo 🖥️ Installing LazyGit...
+winget install --id JesseDuffield.lazygit  -e --accept-package-agreements --accept-source-agreements
+
+echo 🖥️ Installing Microsoft PowerToys...
+winget install --id Microsoft.PowerToys  -e --accept-package-agreements --accept-source-agreements
+
+echo 🖥️ Installing ripgrep...
+winget install --id BurntSushi.ripgrep.MSVC -e --accept-package-agreements --accept-source-agreements
+
 :: Install Visual Studio Code
 echo 🖥️ Installing VS Code...
 winget install --id Microsoft.VisualStudioCode -e --accept-package-agreements --accept-source-agreements
@@ -38,10 +57,6 @@ winget install --id Microsoft.VisualStudioCode -e --accept-package-agreements --
 :: Git clone will require user to add rbenv to PATH manually via system settings
 REM echo 🔁 Cloning rbenv (optional; manual PATH setup required)
 REM git clone https://github.com/rbenv/rbenv.git %USERPROFILE%\.rbenv
-
-echo ========================================
-echo ✅ Base software installations complete.
-echo ========================================
 
 :: Instructions for VS Code Extensions (manual script-based install below)
 echo 🧩 Installing VS Code extensions...
@@ -59,32 +74,27 @@ echo ✅ VS Code extensions installed.
 echo 🔧 Installing Ruby rake gem...
 gem install rake
 
-:: ----------------------------------------
-:: 🐍 Install Python 3
+:: Install Python 3
 echo 🐍 Installing Python 3...
 winget install --id Python.Python.3 -e --accept-package-agreements --accept-source-agreements
 
-:: ----------------------------------------
-:: 🧭 Clone gits CLI
+:: Clone gits CLI
 echo 🧭 Cloning gits CLI...
 git clone https://github.com/Traap/gits.git %USERPROFILE%\gits
 
-:: ----------------------------------------
-:: 🛠️ Set up Python virtual environment
+:: Set up Python virtual environment
 echo 🛠️ Setting up virtual environment...
 cd %USERPROFILE%\gits
 python -m venv .venv
 call .venv\Scripts\activate.bat
 
-:: ----------------------------------------
-:: 📦 Install gits dependencies
+:: Install gits dependencies
 echo 📦 Installing gits dependencies...
 pip install --upgrade pip
 pip install .
 
 echo ========================================
-echo 🏁 All steps complete.
+echo ✅ All steps complete.
 echo Please reboot and configure PATH if needed.
 echo ========================================
 pause
-
