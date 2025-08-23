@@ -114,5 +114,5 @@ code --list-extensions
 ---
 
 ## 📄 License
+BSD 3-Clause License
 
-This setup is provided as-is. You may customize it for your organization or personal use.
