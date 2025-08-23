@@ -25,6 +25,8 @@ This repository provides a fully automated script to configure a complete develo
 | **SumatraPDF**      | Lightweight PDF viewer               |
 | **Visual Studio Code** | GUI code editor                  |
 | **VS Code Extensions** | Support for Ruby, LaTeX, Git, Neovim |
+| **Python 3**        | Required for CLI tools like `gits`   |
+| **gits CLI**        | Custom Git management tool by [Traap/gits](https://github.com/Traap/gits) |
 
 ---
 
@@ -54,7 +56,13 @@ setup.cmd
    - LaTeX (MiKTeX)
    - SumatraPDF
    - Visual Studio Code
-4. Installs VS Code Extensions:
+   - Python 3
+4. Installs and configures:
+   - `gits` CLI:
+     - Clones the [Traap/gits](https://github.com/Traap/gits) repo
+     - Creates a Python virtual environment
+     - Installs the package locally via `pip install .`
+5. Installs VS Code Extensions:
    - `rebornix.Ruby`
    - `wingrunr21.vscode-ruby`
    - `james-yu.latex-workshop`
@@ -74,6 +82,8 @@ setup.cmd
 | Test Neovim                    | `nvim` (ensure config opens)                                                         |
 | Verify LaTeX                   | `pdflatex --version`                                                                  |
 | Test Git                       | `git --version`                                                                       |
+| Test Python                    | `python --version`, `pip list`                                                        |
+| Test gits                      | `cd %USERPROFILE%\gits` → `call .venv\Scripts\activate.bat` → `gits --help`       |
 | Check SumatraPDF               | Should appear in Start Menu or run: `start SumatraPDF`                                |
 
 ---
@@ -97,6 +107,8 @@ rake -V
 git --version
 nvim --version
 pdflatex --version
+python --version
+gits --help
 code --list-extensions
 ```
 
@@ -108,11 +120,10 @@ code --list-extensions
 |------------------------------------|------------------------------|
 | `%USERPROFILE%\projects`          | Store your code projects     |
 | `%USERPROFILE%\.rbenv`            | If using rbenv manually      |
+| `%USERPROFILE%\gits`              | Your gits CLI repo           |
 | `%USERPROFILE%\AppData\Local\nvim` | Neovim config             |
 | `%USERPROFILE%\.vscode\extensions` | VS Code extensions cache  |
 
 ---
 
 ## 📄 License
-BSD 3-Clause License
-

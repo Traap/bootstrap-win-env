@@ -59,6 +59,29 @@ echo ✅ VS Code extensions installed.
 echo 🔧 Installing Ruby rake gem...
 gem install rake
 
+:: ----------------------------------------
+:: 🐍 Install Python 3
+echo 🐍 Installing Python 3...
+winget install --id Python.Python.3 -e --accept-package-agreements --accept-source-agreements
+
+:: ----------------------------------------
+:: 🧭 Clone gits CLI
+echo 🧭 Cloning gits CLI...
+git clone https://github.com/Traap/gits.git %USERPROFILE%\gits
+
+:: ----------------------------------------
+:: 🛠️ Set up Python virtual environment
+echo 🛠️ Setting up virtual environment...
+cd %USERPROFILE%\gits
+python -m venv .venv
+call .venv\Scripts\activate.bat
+
+:: ----------------------------------------
+:: 📦 Install gits dependencies
+echo 📦 Installing gits dependencies...
+pip install --upgrade pip
+pip install .
+
 echo ========================================
 echo 🏁 All steps complete.
 echo Please reboot and configure PATH if needed.
