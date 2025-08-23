@@ -1,4 +1,4 @@
-# 🚀 Windows 11 Developer Environment Setup (`setup.cmd`)
+# 🚀 Windows 11 Developer Environment install (`install.cmd`)
 
 This repository provides a fully automated script to configure a complete developer environment on **Windows 11** using only **Command Prompt with Admin privileges** and `winget`.
 
@@ -30,7 +30,7 @@ This repository provides a fully automated script to configure a complete develo
 
 ---
 
-## 📂 File: `setup.cmd`
+## 📂 File: `install.cmd`
 
 This batch file automates installation using `winget`. You must **run it as Administrator**:
 
@@ -39,7 +39,7 @@ This batch file automates installation using `winget`. You must **run it as Admi
 ```cmd
 :: Open Command Prompt as Administrator
 cd path\to\this\repo
-setup.cmd
+install.cmd
 ```
 
 ---
