@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 REM ============================================================================
-REM Update USER Path from user-path-segments.txt
+REM Update USER Path from user-path-segments.cfg
 REM   Usage:
 REM     set-user-path.cmd               -> append mode (default)
 REM     set-user-path.cmd append        -> append mode
@@ -19,7 +19,7 @@ set "PATH_MODE=%~1"
 if not defined PATH_MODE set "PATH_MODE=append"
 
 REM ---- Input file (next to this script)
-set "LIST=%~dp0user-path-segments.txt"
+set "LIST=%~dp0user-path-segments.cfg"
 if not exist "%LIST%" (
   echo ERROR: %LIST% not found.
   exit /b 1

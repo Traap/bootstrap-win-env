@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 REM =============================================================================
-REM Persist USER environment variables from user-environment-variables.txt
+REM Persist USER environment variables from user-environment-variables.cfg
 REM  - Format: NAME=VALUE (one per line)
 REM  - Ignores blank lines and lines starting with # or ;
 REM  - Writes REG_EXPAND_SZ if VALUE contains %...%, else REG_SZ
@@ -9,7 +9,7 @@ REM  - Prevents %VAR% from expanding while parsing
 REM  - Changes take effect in NEW shells
 REM =============================================================================
 
-set "LIST=%~dp0user-environment-variables.txt"
+set "LIST=%~dp0user-environment-variables.cfg"
 if not exist "%LIST%" (
   echo ERROR: %LIST% not found.
   exit /b 1
