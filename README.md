@@ -8,19 +8,27 @@ under **Command Prompt with administrative privileges**.
 ## ⚠️ TL;DR
 
 Quick steps:
-  - clone this repository
-   ```cmd
-   git clone https://github.com/your-user/your-repo.git
-   cd your-repo
-   ```
-  - Change USERROOT in ```user-environment-variabvles.cfg`
-  - Start a command shell
-   ```command
-   set-user-environment-variables.command
-   set-user-environment-variables.command
-   install.cmd
-   ```
-  - logout
+  1. Start a Git Bash shell and clone this repository
+```cmd
+git clone https://github.com/your-user/your-repo.git
+cd your-repo
+```
+  2. Change USERROOT in ```user-environment-variabvles.cfg```
+  3. Start a command shell and run these commands
+```command
+set-user-environment-variables.command
+set-user-environment-variables.command
+install.cmd
+```
+  4. Logout and login
+  5. Start a Git Bash shell
+  6. Install gits to help you efficiently clone, pull, clean, convert, delete,
+     and track status of many repositories -- organized by group -- using a
+     single YAML configuration.
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Traap/gits/master/install.sh)"
+```
+  7. Customize ```~/.config/gits/repository_locations.yml```
 ---
 
 ## 🔧 Requirements
