@@ -1,7 +1,26 @@
 # 🚀 Windows 11 Dev Environment Installer
 
-This repository provides a reproducible Windows 11 development environment using a single `install.cmd` script. It installs all tools using `winget` and runs under **Command Prompt with administrative privileges**.
+This repository provides a reproducible Windows 11 development environment using
+a single `install.cmd` script. It installs all tools using `winget` and runs
+under **Command Prompt with administrative privileges**.
 
+---
+## ⚠️ TL;DR
+
+Quick steps:
+  - clone this repository
+   ```cmd
+   git clone https://github.com/your-user/your-repo.git
+   cd your-repo
+   ```
+  - Change USERROOT in ```user-environment-variabvles.cfg`
+  - Start a command shell
+   ```command
+   set-user-environment-variables.command
+   set-user-environment-variables.command
+   install.cmd
+   ```
+  - logout
 ---
 
 ## 🔧 Requirements
