@@ -1,0 +1,40 @@
+bracco:
+  - root_dir: ~/bracco
+  - repositories:
+
+    - alias: sf90
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/SF90
+      do_not_delete: false
+
+    - alias: Build-History-File-Gen
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/Build-History-File-Gen
+      do_not_delete: false
+
+soup:
+  - root_dir: ~/soup
+  - repositories:
+
+    - alias: amber
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/amber
+      do_not_delete: false
+
+    - alias: autodoc
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/autodoc
+      do_not_delete: false
+
+    - alias: bootstrap-win-env
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/bootstrap-win-env
+      do_not_delete: false
+
+    - alias: docbld
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/docbld
+      do_not_delete: false
+
+    - alias: newdoc
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/newdoc
+      do_not_delete: false
+
+    - alias: tlc-article
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/tic-article
+      do_not_delete: false
+

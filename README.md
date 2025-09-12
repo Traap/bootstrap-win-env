@@ -20,15 +20,7 @@ set-user-environment-variables.command
 set-user-environment-variables.command
 install.cmd
 ```
-  4. Logout and login
-  5. Start a Git Bash shell
-  6. Install gits to help you efficiently clone, pull, clean, convert, delete,
-     and track status of many repositories -- organized by group -- using a
-     single YAML configuration.
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Traap/gits/master/install.sh)"
-```
-  7. Customize ```~/.config/gits/repository_locations.yml```
+  4. Logout and login; your system is ready.
 ---
 
 ## 🔧 Requirements

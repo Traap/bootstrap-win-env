@@ -15,66 +15,66 @@ winget source update
 
 :: Install Git
 echo 🧬 Installing Git...
-%WINGET_INSTALL% Git.Git
+call :install_with_prompt Git.Git
 
 :: Install Ruby
 echo 💎 Installing Ruby...
-%WINGET_INSTALL% RubyInstallerTeam.RubyWithDevKit.3.2
+call :install_with_prompt RubyInstallerTeam.RubyWithDevKit.3.2
 
 :: Install LaTeX (MiKTeX)
 echo 📄 Installing LaTeX (MiKTeX)...
-%WINGET_INSTALL% MiKTeX.MiKTeX
+call :install_with_prompt MiKTeX.MiKTeX
 
 :: Install Neovim
 echo 🧠 Installing Neovim...
-%WINGET_INSTALL% Neovim.Neovim
+call :install_with_prompt Neovim.Neovim
 
 :: Install SumatraPDF
 echo 📘 Installing SumatraPDF...
-%WINGET_INSTALL% SumatraPDF.SumatraPDF
+call :install_with_prompt SumatraPDF.SumatraPDF
 
 :: Install developer command line and graphical tools
 echo 🖥️ Installingbat...
-%WINGET_INSTALL% sharkdp.bat
+call :install_with_prompt sharkdp.bat
 
 echo 🖥️ Installing Clink...
-%WINGET_INSTALL% chrisant996.Clink
+call :install_with_prompt chrisant996.Clink
 
 echo 🖥️ Installg Flameshot...
-%WINGET_INSTALL% Flameshot.Flameshot
+call :install_with_prompt Flameshot.Flameshot
 
 echo 🖥️ Installg fastfetch...
-%WINGET_INSTALL% Fastfetch-cli.Fastfetch
+call :install_with_prompt Fastfetch-cli.Fastfetch
 
 echo 🖥️ Installg fd...
-%WINGET_INSTALL% sharkdp.fd
+call :install_with_prompt sharkdp.fd
 
 echo 🖥️ Installing fzf...
-%WINGET_INSTALL% junegunn.fzf
+call :install_with_prompt junegunn.fzf
 
 echo 🖥️ Installing LazyGit...
-%WINGET_INSTALL% JesseDuffield.lazygit
+call :install_with_prompt JesseDuffield.lazygit
 
 echo 🖥️ Installing Microsoft PowerToys...
-%WINGET_INSTALL% Microsoft.PowerToys
+call :install_with_prompt Microsoft.PowerToys
 
 echo 🖥️ Installing ripgrep...
-%WINGET_INSTALL% BurntSushi.ripgrep.MSVC
+call :install_with_prompt BurntSushi.ripgrep.MSVC
 
 echo 🖥️ Inslalling StrawberryPerl...
-%WINGET_INSTALL% StrawberryPerl.StrawberryPerl 
+call :install_with_prompt StrawberryPerl.StrawberryPerl
 
 echo 🖥️ Installing Yazi...
-%WINGET_INSTALL% sxyazi.yazi
+call :install_with_prompt sxyazi.yazi
 
 :: Install Visual Studio Code
 echo 🖥️ Installing VS Code...
-%WINGET_INSTALL% Microsoft.VisualStudioCode
+call :install_with_prompt Microsoft.VisualStudioCode
 
 :: Optional: Install rbenv via Git clone (manual path setup needed)
 :: Git clone will require user to add rbenv to PATH manually via system settings
-REM echo Cloning optional; manual PATH setup required)
-REM git clone https://github.com/rbenv/rbenv.git %USERPROFILE%\.rbenv
+:: echo Cloning optional; manual PATH setup required)
+:: git clone https://github.com/rbenv/rbenv.git %USERPROFILE%\.rbenv
 
 :: Instructions for VS Code Extensions (manual script-based install below)
 echo 🧩 Installing VS Code extensions...
@@ -90,7 +90,7 @@ echo ✅ VS Code extensions installed.
 
 :: Install Python 3
 echo 🐍 Installing Python 3...
-%WINGET_INSTALL% Python.Python.3
+call :install_with_prompt Python.Python.3
 
 :: Optional: Install Ruby gems (e.g., rake)
 echo 🔧 Installing Ruby rake gem...
@@ -111,8 +111,51 @@ echo 📦 Installing gits dependencies...
 pythone -m pip install --upgrade pip
 pip install .
 
+:: Copy repository_locations.yml if it doesn't already exist
+echo 📁 Checking for repository_locations.yml...
+
+set "SRC_FILE=%~dp0repository_locations.yml"
+set "DEST_DIR=%USERPROFILE%\.config\gits"
+set "DEST_FILE=%DEST_DIR%\repository_locations.yml"
+
+if exist "%DEST_FILE%" (
+  echo ⚠️  File already exists: "%DEST_FILE%"
+  set /p USERCHOICE=Do you want to overwrite it? [y/N]:
+  if /I "%USERCHOICE%" NEQ "Y" (
+    echo ❌ Skipping copy.
+    rem Continue script execution instead of exiting
+  ) else (
+    echo 📄 Copying file to "%DEST_FILE%"
+    copy /Y "%SRC_FILE%" "%DEST_FILE%"
+  )
+) else (
+  if not exist "%DEST_DIR%" (
+    mkdir "%DEST_DIR%"
+  )
+  echo 📄 Copying file to "%DEST_FILE%"
+  copy /Y "%SRC_FILE%" "%DEST_FILE%"
+)
+
+
+:EOF
 echo ========================================
 echo ✅ All steps complete.
 echo Please reboot and configure PATH if needed.
 echo ========================================
 pause
+
+:: ----------------------------------------
+:: Subroutine: install_with_prompt
+:install_with_prompt
+:: %1 = winget package ID (e.g., Git.Git)
+set "PKG=%~1"
+
+set /p ANSWER=Install %PKG%? [Y/n]:
+if /I "%ANSWER%"=="N" (
+  echo ❌ Skipped %PKG%
+  exit /b
+)
+
+echo 🛠 Installing %PKG%...
+%WINGET_INSTALL% %PKG%
+exit /b
