@@ -35,6 +35,6 @@ soup:
       do_not_delete: false
 
     - alias: tlc-article
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/tic-article
+      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/tlc-article
       do_not_delete: false
 
