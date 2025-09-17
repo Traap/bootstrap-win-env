@@ -3,24 +3,30 @@
 This repository provides a reproducible Windows 11 development environment using
 a single `install.cmd` script. It installs all tools using `winget` and runs
 under **Command Prompt with administrative privileges**.
-
 ---
 ## ⚠️ TL;DR
 
 Quick steps:
   1. Start a Git Bash shell and clone this repository
 ```cmd
-git clone https://github.com/your-user/your-repo.git
+git clone http://github.com/Traap/bootstrap-win-env
 cd your-repo
 ```
   2. Change USERROOT in ```user-environment-variabvles.cfg```
   3. Start a command shell and run these commands
 ```command
-set-user-environment-variables.command
-set-user-environment-variables.command
+set-user-environment-variables.cmd
+set-user-path.cmd replace_userj
 install.cmd
 ```
-  4. Logout and login; your system is ready.
+  4. Logout; your system is ready.  FYI:  Check for a valid .bashrc
+  5. Start a Git Bash Shell to clone respositories and build documentation
+```
+  gits clone -v
+  cd $AUTODOCPATH
+  docbld list_files
+  docbld
+`
 ---
 
 ## 🔧 Requirements

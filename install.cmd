@@ -147,6 +147,46 @@ if exist "%DEST_FILE%" (
 )
 :SKIP_Repository_locations
 
+:: Copy .bashrc it doesn't already exist
+echo 📁 Checking for .bashrc
+call :guarded ".bashrc" || goto :SKIP_bashrc
+set "SRC_FILE1=%~dp0.bashrc"
+set "SRC_FILE2=%~dp0.bash_profile"
+set "SRC_FILE3=%~dp0.bash_personal"
+set "SRC_FILE4=%~dp0.bash_logout"
+
+set "DEST_DIR=%USERPROFILE%"
+
+set "DEST_FILE1=%DEST_DIR%\.bashrc"
+set "DEST_FILE2=%DEST_DIR%\.bash_profile"
+set "DEST_FILE3=%DEST_DIR%\.bash_personal"
+set "DEST_FILE4=%DEST_DIR%\.bash_logout"
+
+
+if exist "%DEST_FILE%" (
+  echo ⚠️  File already exists: "%DEST_FILE%"
+  set /p ANSWER=Do you want to overwrite it? [y/N]:
+  if /I "%ANSWER%"=="N" (
+    echo ❌ Skipping copy.
+  ) else (
+    echo 📄 Copying file to "%DEST_FILE%"
+    copy /Y "%SRC_FILE1%" "%DEST_FILE1%"
+    copy /Y "%SRC_FILE2%" "%DEST_FILE2%"
+    copy /Y "%SRC_FILE3%" "%DEST_FILE3%"
+    copy /Y "%SRC_FILE4%" "%DEST_FILE4%"
+  )
+) else (
+  if not exist "%DEST_DIR%" (
+    mkdir "%DEST_DIR%"
+  )
+  echo 📄 Copying file to "%DEST_FILE%"
+  copy /Y "%SRC_FILE1%" "%DEST_FILE1%"
+  copy /Y "%SRC_FILE2%" "%DEST_FILE2%"
+  copy /Y "%SRC_FILE3%" "%DEST_FILE3%"
+  copy /Y "%SRC_FILE4%" "%DEST_FILE4%"
+)
+:SKIP_bashrc
+
 echo ========================================
 echo ✅ All steps complete.
 echo Please reboot and configure PATH if needed.

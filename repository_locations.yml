@@ -1,40 +1,63 @@
-bracco:
-  - root_dir: ~/bracco
+# {{{ bootstrap
+
+bootstrap:
+  - root_dir: bootstrap
   - repositories:
+    - alias:  BSS
+      url: git@gsa-gitea:BSS/Bootstrap-BSS.git
 
-    - alias: sf90
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/SF90
-      do_not_delete: false
+    - alias: Utilities
+      url: git@gsa-gitea:BSS/Utilities.git
 
-    - alias: Build-History-File-Gen
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/Build-History-File-Gen
-      do_not_delete: false
+    - alias: WinEnv
+      url: git@github.com:Traap/bootstrap-win-env.git
 
-soup:
-  - root_dir: ~/soup
+# -------------------------------------------------------------------------- }}}
+# {{{ gitea
+
+gitea:
+  - root_dir: gitea
   - repositories:
+    - alias: Aim
+      url: git@gsa-gitea:BSS/AIM.git
 
-    - alias: amber
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/amber
-      do_not_delete: false
+    - alias: Billing
+      url: git@gsa-gitea:BSS/Billing.git
 
-    - alias: autodoc
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/autodoc
-      do_not_delete: false
+    - alias: Calsaws
+      url: git@gsa-gitea:BSS/Calsaws.git
 
-    - alias: bootstrap-win-env
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/bootstrap-win-env
-      do_not_delete: false
+    - alias: ChartOfAccounts
+      url: git@gsa-gitea:BSS/ChartOfAccounts.git
 
-    - alias: docbld
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/docbld
-      do_not_delete: false
+    - alias: cronjobs
+      url: git@gsa-gitea:BSS/cronjobs.git
 
-    - alias: newdoc
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/newdoc
-      do_not_delete: false
+    - alias: DocAuto
+      url: git@gsa-gitea:BSS/DocAuto.git
 
-    - alias: tlc-article
-      url: https://Acist-FW@dev.azure.com/Acist-FW/SF90/_git/tlc-article
-      do_not_delete: false
+    - alias: LeaveOfAbsence
+      url: git@gsa-gitea:BSS/LeaveOfAbsence.git
 
+    - alias: OversizedScan
+      url: git@gsa-gitea:BSS/OversizedScan.git
+
+    - alias: P2M
+      url: git@gsa-gitea:BSS/P2M.git
+
+    - alias: Presentations
+      url: git@gsa-gitea:BSS/Presentations.git
+
+    - alias: Records
+      url: git@gsa-gitea:BSS/Records.git
+
+    - alias: Scans
+      url: git@gsa-gitea:BSS/Scans.git
+
+    - alias: Stores
+      url: git@gsa-gitea:BSS/Stores.git
+
+    - alias: VcPrint
+      url: git@gsa-gitea:BSS/VcPrint.git
+
+# -------------------------------------------------------------------------- }}}
