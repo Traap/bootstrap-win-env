@@ -1,4 +1,6 @@
 @echo off
+:: {{{ Initial greeting.
+
 echo ========================================
 echo 🚀 Setting up Windows 11 Dev Environment
 echo ========================================
@@ -6,16 +8,24 @@ echo ========================================
 :: Enable UTF-8
 chcp 65001
 
-:: Global winget install flags
+:: --------------------------------------------------------------------------}}}
+:: {{{ Global winget install flags
+
 set WINGET_INSTALL=winget install -e --accept-package-agreements --accept-source-agreements --id
 
-:: Update Winget Sources
+:: --------------------------------------------------------------------------}}}
+:: {{{ Update Winget Sources
+
+
 echo 🔄 Updating winget sources...
 winget source update
 echo.
 
+:: --------------------------------------------------------------------------}}}
+:: {{{ Install programs using winget
+
 :: Install Git
-echo 🧬 Installing Git...
+echo 🧬 Install in Git...
 call :install_with_prompt Git.Git
 
 :: Install Ruby
@@ -35,19 +45,19 @@ echo 📘 Installing SumatraPDF...
 call :install_with_prompt SumatraPDF.SumatraPDF
 
 :: Install developer command line and graphical tools
-echo 🖥️ Installingbat...
+echo 🖥️ Installing bat...
 call :install_with_prompt sharkdp.bat
 
 echo 🖥️ Installing Clink...
 call :install_with_prompt chrisant996.Clink
 
-echo 🖥️ Installg Flameshot...
+echo 🖥️ Installing Flameshot...
 call :install_with_prompt Flameshot.Flameshot
 
-echo 🖥️ Installg fastfetch...
+echo 🖥️ Installing fastfetch...
 call :install_with_prompt Fastfetch-cli.Fastfetch
 
-echo 🖥️ Installg fd...
+echo 🖥️ Installing fd...
 call :install_with_prompt sharkdp.fd
 
 echo 🖥️ Installing fzf...
@@ -62,7 +72,7 @@ call :install_with_prompt Microsoft.PowerToys
 echo 🖥️ Installing ripgrep...
 call :install_with_prompt BurntSushi.ripgrep.MSVC
 
-echo 🖥️ Inslalling StrawberryPerl...
+echo 🖥️ Installing StrawberryPerl...
 call :install_with_prompt StrawberryPerl.StrawberryPerl
 
 echo 🖥️ Installing Yazi...
@@ -72,12 +82,9 @@ call :install_with_prompt sxyazi.yazi
 echo 🖥️ Installing VS Code...
 call :install_with_prompt Microsoft.VisualStudioCode
 
-:: Optional: Install rbenv via Git clone (manual path setup needed)
-:: Git clone will require user to add rbenv to PATH manually via system settings
-:: echo Cloning optional; manual PATH setup required)
-:: git clone https://github.com/rbenv/rbenv.git %USERPROFILE%\.rbenv
+:: --------------------------------------------------------------------------}}}
+:: {{{ Install VS Code Extensions
 
-:: Install VS Code Extensions
 :: VS Code CLI path may vary; ensure it's in PATH or use full path
 echo 🧩 Installing VS Code extensions...
 call :guarded "VS.Code.Extensions" || goto :SKIP_VS_Code_Extensions
@@ -89,25 +96,33 @@ call code --install-extension "Neovim.vim"
 echo ✅ VS Code extensions installed.
 :SKIP_VS_Code_Extensions
 
-:: Install Python 3
+:: --------------------------------------------------------------------------}}}
+:: {{{ Install Python 3
+
 echo 🐍 Installing Python 3...
 call :guarded "Python.3" || goto :SKIP_Python_3
-call :install_with_prompt Python.Python.3
+call :install_with_prompt Python.Python.3.13
 :SKIP_Python_3
 
-:: Optional: Install Ruby gems (e.g., rake)
+:: --------------------------------------------------------------------------}}}
+:: {{{ Optional: Install Ruby gems (e.g., rake)
+
 echo 🔧 Installing Ruby rake gem...
 call :guarded "Gem.Rake" || goto :SKIP_Gem_Rake
 gem install rake
 :SKIP_Gem_Rake
 
-:: Clone gits CLI
+:: --------------------------------------------------------------------------}}}
+:: {{{ Clone gits CLI
+
 echo 🧭 Cloning gits CLI...
 call :guarded "Gits.CLI" || goto :SKIP_GITS_CLI
 git clone https://github.com/Traap/gits.git %USERPROFILE%\gits
 :SKIP_GITS_CLI
 
-:: Set up Python virtual environment
+:: --------------------------------------------------------------------------}}}
+:: {{{ Set up Python virtual environment
+
 echo 🛠️ Setting up virtual environment...
 call :guarded "Python.virtual.environment" || goto :SKIP_Python_virtual_environment
 cd %USERPROFILE%\gits
@@ -115,77 +130,75 @@ python -m venv .venv
 call .venv\Scripts\activate.bat
 :SKIP_Python_virtual_environment
 
-:: Install gits dependencies
+:: --------------------------------------------------------------------------}}}
+:: {{{ Install gits dependencies
+
 echo 📦 Installing Python pip...
 call :guarded "Python.Pip" || goto :SKIP_Python_pip
 python -m pip install --upgrade pip
 pip install .
 :SKIP_Python_pip
 
-:: Copy repository_locations.yml if it doesn't already exist
+:: --------------------------------------------------------------------------}}}
+:: {{{ Copy repository_locations.yml if it doesn't already exist
+
 echo 📁 Checking for repository_locations.yml...
 call :guarded "Repository.locations" || goto :SKIP_Repository_locations
 set "SRC_FILE=%~dp0repository_locations.yml"
 set "DEST_DIR=%USERPROFILE%\.config\gits"
 set "DEST_FILE=%DEST_DIR%\repository_locations.yml"
-
-if exist "%DEST_FILE%" (
-  echo ⚠️  File already exists: "%DEST_FILE%"
-  set /p ANSWER=Do you want to overwrite it? [y/N]:
-  if /I "%ANSWER%"=="N" (
-    echo ❌ Skipping copy.
-  ) else (
-    echo 📄 Copying file to "%DEST_FILE%"
-    copy /Y "%SRC_FILE%" "%DEST_FILE%"
-  )
-) else (
-  if not exist "%DEST_DIR%" (
-    mkdir "%DEST_DIR%"
-  )
-  echo 📄 Copying file to "%DEST_FILE%"
-  copy /Y "%SRC_FILE%" "%DEST_FILE%"
-)
+call :copy_with_prompt "%SRC_FILE%" "%DEST_DIR%"
 :SKIP_Repository_locations
 
-:: Copy .bashrc it doesn't already exist
+:: --------------------------------------------------------------------------}}}
+:: {{{ Copy .bashrc it doesn't already exist
+
 echo 📁 Checking for .bashrc
 call :guarded ".bashrc" || goto :SKIP_bashrc
-set "SRC_FILE1=%~dp0.bashrc"
-set "SRC_FILE2=%~dp0.bash_profile"
-set "SRC_FILE3=%~dp0.bash_personal"
-set "SRC_FILE4=%~dp0.bash_logout"
-
 set "DEST_DIR=%USERPROFILE%"
 
-set "DEST_FILE1=%DEST_DIR%\.bashrc"
-set "DEST_FILE2=%DEST_DIR%\.bash_profile"
-set "DEST_FILE3=%DEST_DIR%\.bash_personal"
-set "DEST_FILE4=%DEST_DIR%\.bash_logout"
+set "SRC_FILE=%~dp0.bash_profile"
+set "DEST_FILE=%DEST_DIR%\.bash_profile"
+call :copy_with_prompt "%SRC_FILE%" "%DEST_DIR%"
 
+set "SRC_FILE=%~dp0.bashrc"
+set "DEST_FILE=%DEST_DIR%\.bashrc"
+call :copy_with_prompt "%SRC_FILE%" "%DEST_DIR%"
 
-if exist "%DEST_FILE%" (
-  echo ⚠️  File already exists: "%DEST_FILE%"
-  set /p ANSWER=Do you want to overwrite it? [y/N]:
-  if /I "%ANSWER%"=="N" (
-    echo ❌ Skipping copy.
-  ) else (
-    echo 📄 Copying file to "%DEST_FILE%"
-    copy /Y "%SRC_FILE1%" "%DEST_FILE1%"
-    copy /Y "%SRC_FILE2%" "%DEST_FILE2%"
-    copy /Y "%SRC_FILE3%" "%DEST_FILE3%"
-    copy /Y "%SRC_FILE4%" "%DEST_FILE4%"
-  )
-) else (
-  if not exist "%DEST_DIR%" (
-    mkdir "%DEST_DIR%"
-  )
-  echo 📄 Copying file to "%DEST_FILE%"
-  copy /Y "%SRC_FILE1%" "%DEST_FILE1%"
-  copy /Y "%SRC_FILE2%" "%DEST_FILE2%"
-  copy /Y "%SRC_FILE3%" "%DEST_FILE3%"
-  copy /Y "%SRC_FILE4%" "%DEST_FILE4%"
-)
+set "SRC_FILE=%~dp0.bashrc_personal"
+set "DEST_FILE=%DEST_DIR%\.bashrc_personal"
+call :copy_with_prompt "%SRC_FILE%" "%DEST_DIR%"
+
+set "SRC_FILE=%~dp0.bash_logout"
+set "DEST_FILE=%DEST_DIR%\.bash_logout"
+call :copy_with_prompt "%SRC_FILE%" "%DEST_DIR%"
+
 :SKIP_bashrc
+
+:: --------------------------------------------------------------------------}}}
+:: {{{ Copy .inputrc it doesn't already exist
+
+echo 📁 Checking for .inputrc
+call :guarded ".inputrc" || goto :SKIP_inputrc
+set "SRC_FILE=%~dp0.inputrc"
+set "DEST_DIR=%USERPROFILE%"
+set "DEST_FILE=%DEST_DIR%\.inputrc"
+call :copy_with_prompt "%SRC_FILE%" "%DEST_DIR%"
+:SKIP_inputrc
+
+:: --------------------------------------------------------------------------}}}
+:: {{{ Copy newdoc it doesn't already exist
+
+echo 📁 Checking for newdoc
+call :guarded "docbld" || goto :SKIP_docbld
+set "SRC_FILE=%~dp0docbld"
+set "DEST_DIR=%USERPROFILE%\.local\bin"
+set "DEST_FILE=%DEST_DIR%\docbld"
+call :copy_with_prompt "%SRC_FILE%" "%DEST_DIR%"
+:SKIP_docbld
+
+:: --------------------------------------------------------------------------}}}
+:: {{{ Final message.
 
 echo ========================================
 echo ✅ All steps complete.
@@ -194,8 +207,9 @@ echo ========================================
 pause
 goto :EOF
 
-:: ----------------------------------------
-:: Subroutine: install_with_prompt
+:: --------------------------------------------------------------------------}}}
+:: {{{ Subroutine: install_with_prompt
+
 :install_with_prompt
 :: %1 = winget package ID (e.g., Git.Git)
 set "PKG=%~1"
@@ -211,10 +225,11 @@ echo 🛠 Installing %PKG%...
 echo.
 exit /b
 
-:: ----------------------------------------
-:: Subroutine: guarded
-:: Usage: call :guarded "Label"
-:: Returns 0 to proceed, 1 to skip
+:: --------------------------------------------------------------------------}}}
+:: {{{ Subroutine: guarded
+::     Usage: call :guarded "Label"
+::     Returns 0 to proceed, 1 to skip
+
 :guarded
 set "GUARD_LABEL=%~1"
 
@@ -228,3 +243,39 @@ if /I "%ANSWER%"=="N" (
 echo ✅ Installing %GUARD_LABEL%...
 echo.
 exit /b 0
+
+:: --------------------------------------------------------------------------}}}
+:: {{{ Subroutine: copy_with_prompt
+::     Usage: call copy_with_prompt "src_file", "dest_file", "dest_dir"
+::     Returns 0 to proceed, 1 to skip
+
+:copy_with_prompt
+setlocal
+
+set "SRC=%~1"
+set "DST=%~2"
+
+rem Extract filename only from source path
+for %%F in ("%SRC%") do set "FILENAME=%%~nxF"
+
+rem Ensure destination path points to full file, not just directory
+if exist "%DST%\" (
+  set "DST=%DST%\%FILENAME%"
+)
+
+if exist "%DST%" (
+  echo ❗ %DST% already exists.
+  set /p ANSWER=Overwrite with %SRC%? [y/N]:
+  if /I "%ANSWER%"=="N" (
+    echo ❌ Skipped %FILENAME%
+    echo.
+    endlocal & exit /b 1
+  )
+)
+
+echo 📝 Copying %SRC% → %DST%
+copy /Y "%SRC%" "%DST%" >nul
+echo.
+endlocal & exit /b 0
+
+:: --------------------------------------------------------------------------}}}
