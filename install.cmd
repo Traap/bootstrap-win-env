@@ -66,6 +66,9 @@ call :install_with_prompt junegunn.fzf
 echo 🖥️ Installing LazyGit...
 call :install_with_prompt JesseDuffield.lazygit
 
+echo 🖥️ Installing LLVM...
+call :install_with_prompt
+
 echo 🖥️ Installing Microsoft PowerToys...
 call :install_with_prompt Microsoft.PowerToys
 
@@ -74,6 +77,9 @@ call :install_with_prompt BurntSushi.ripgrep.MSVC
 
 echo 🖥️ Installing StrawberryPerl...
 call :install_with_prompt StrawberryPerl.StrawberryPerl
+
+echo 🖥️ Installing w32yank...
+call :install_with_prompt equalsraf.win32yank
 
 echo 🖥️ Installing Yazi...
 call :install_with_prompt sxyazi.yazi
