@@ -24,69 +24,80 @@ echo.
 :: --------------------------------------------------------------------------}}}
 :: {{{ Install programs using winget
 
-:: Install Git
 echo 🧬 Install in Git...
-call :install_with_prompt Git.Git
+call :winget_with_prompt Git.Git
 
-:: Install Ruby
 echo 💎 Installing Ruby...
-call :install_with_prompt RubyInstallerTeam.RubyWithDevKit.3.2
+call :winget_with_prompt RubyInstallerTeam.RubyWithDevKit.3.2
 
-:: Install LaTeX (MiKTeX)
 echo 📄 Installing LaTeX (MiKTeX)...
-call :install_with_prompt MiKTeX.MiKTeX
+call :winget_with_prompt MiKTeX.MiKTeX
 
-:: Install Neovim
 echo 🧠 Installing Neovim...
-call :install_with_prompt Neovim.Neovim
+call :winget_with_prompt Neovim.Neovim
 
-:: Install SumatraPDF
 echo 📘 Installing SumatraPDF...
-call :install_with_prompt SumatraPDF.SumatraPDF
+call :winget_with_prompt SumatraPDF.SumatraPDF
 
-:: Install developer command line and graphical tools
+echo 🖥️ Installing Ast-Grep...
+call :winget_with_prompt ast-grep.ast-grep
+
 echo 🖥️ Installing bat...
-call :install_with_prompt sharkdp.bat
+call :winget_with_prompt sharkdp.bat
 
 echo 🖥️ Installing Clink...
-call :install_with_prompt chrisant996.Clink
+call :winget_with_prompt chrisant996.Clink
 
 echo 🖥️ Installing Flameshot...
-call :install_with_prompt Flameshot.Flameshot
+call :winget_with_prompt Flameshot.Flameshot
 
 echo 🖥️ Installing fastfetch...
-call :install_with_prompt Fastfetch-cli.Fastfetch
+call :winget_with_prompt Fastfetch-cli.Fastfetch
 
 echo 🖥️ Installing fd...
-call :install_with_prompt sharkdp.fd
+call :winget_with_prompt sharkdp.fd
 
 echo 🖥️ Installing fzf...
-call :install_with_prompt junegunn.fzf
+call :winget_with_prompt junegunn.fzf
+
+echo 🖥️ Installing Ghostscript...
+call :winget_with_prompt PaperCutSoftware.GhostTrap
+
+echo 🖥️ Installing ImageMagick...
+call :winget_with_prompt ImageMagick.ImageMagick
 
 echo 🖥️ Installing LazyGit...
-call :install_with_prompt JesseDuffield.lazygit
+call :winget_with_prompt JesseDuffield.lazygit
+
+echo 🖥️ Installing LuaJIT...
+call :winget_with_prompt DEVCOM.LuaJIT
 
 echo 🖥️ Installing LLVM...
-call :install_with_prompt LLVM.LLVM
+call :winget_with_prompt LLVM.LLVM
 
 echo 🖥️ Installing Microsoft PowerToys...
-call :install_with_prompt Microsoft.PowerToys
+call :winget_with_prompt Microsoft.PowerToys
 
 echo 🖥️ Installing ripgrep...
-call :install_with_prompt BurntSushi.ripgrep.MSVC
+call :winget_with_prompt BurntSushi.ripgrep.MSVC
 
 echo 🖥️ Installing StrawberryPerl...
-call :install_with_prompt StrawberryPerl.StrawberryPerl
+call :winget_with_prompt StrawberryPerl.StrawberryPerl
+
+echo 🖥️ Installing wget...
+call :winget_with_prompt GNU.Wget2
 
 echo 🖥️ Installing w32yank...
-call :install_with_prompt equalsraf.win32yank
+call :winget_with_prompt equalsraf.win32yank
 
 echo 🖥️ Installing Yazi...
-call :install_with_prompt sxyazi.yazi
+call :winget_with_prompt sxyazi.yazi
 
-:: Install Visual Studio Code
+echo 💎 Installing 7zip...
+call :winget_with_prompt 7zip.7zip
+
 echo 🖥️ Installing VS Code...
-call :install_with_prompt Microsoft.VisualStudioCode
+call :winget_with_prompt Microsoft.VisualStudioCode
 
 :: --------------------------------------------------------------------------}}}
 :: {{{ Install VS Code Extensions
@@ -107,7 +118,7 @@ echo ✅ VS Code extensions installed.
 
 echo 🐍 Installing Python 3...
 call :guarded "Python.3" || goto :SKIP_Python_3
-call :install_with_prompt Python.Python.3.13
+call :winget_with_prompt Python.Python.3.13
 :SKIP_Python_3
 
 :: --------------------------------------------------------------------------}}}
@@ -117,6 +128,11 @@ echo 🔧 Installing Ruby rake gem...
 call :guarded "Gem.Rake" || goto :SKIP_Gem_Rake
 gem install rake
 :SKIP_Gem_Rake
+
+echo 🔧 Installing Ruby neovim gem...
+call :guarded "Gem.Neovim" || goto :SKIP_Gem_Neovim
+gem install neovim
+:SKIP_Gem_Neovim
 
 :: --------------------------------------------------------------------------}}}
 :: {{{ Clone gits CLI
@@ -144,6 +160,24 @@ call :guarded "Python.Pip" || goto :SKIP_Python_pip
 python -m pip install --upgrade pip
 pip install .
 :SKIP_Python_pip
+
+:: --------------------------------------------------------------------------}}}
+:: {{{ Install programs using node
+
+echo 💎 Installing neovim host...
+call :node_with_prompt neovim
+
+echo 🖥️ Installing Mermaid CLI
+call :node_with_prompt @mermaid-js/mermaid-cli
+
+:: --------------------------------------------------------------------------}}}
+:: {{{ Install programs using pip
+
+echo 💎 Installing pip...
+call :pip_with_prompt pip
+
+echo 🖥️ Installing pynvim
+call :pip_with_prompt pynvim
 
 :: --------------------------------------------------------------------------}}}
 :: {{{ Copy repository_locations.yml if it doesn't already exist
@@ -214,10 +248,10 @@ pause
 goto :EOF
 
 :: --------------------------------------------------------------------------}}}
-:: {{{ Subroutine: install_with_prompt
+:: {{{ Subroutine: winget_with_prompt
+::     %1 = winget package ID (e.g., Git.Git)
 
-:install_with_prompt
-:: %1 = winget package ID (e.g., Git.Git)
+:winget_with_prompt
 set "PKG=%~1"
 set /p ANSWER=Install "%PKG%?" [y/N]:
 if /I "%ANSWER%"=="N" (
@@ -283,5 +317,42 @@ echo 📝 Copying %SRC% → %DST%
 copy /Y "%SRC%" "%DST%" >nul
 echo.
 endlocal & exit /b 0
+
+:: --------------------------------------------------------------------------}}}
+:: {{{ Subroutine: node_with_prompt
+::     %1 = winget package ID (e.g., Git.Git)
+
+:node_with_prompt
+set "NODE=%~1"
+set /p ANSWER=Install "%NODE%?" [y/N]:
+if /I "%ANSWER%"=="N" (
+  echo ❌ Skipped %NODE%
+  echo.
+  exit /b
+)
+
+echo 🛠 Installing %NODE%...
+call npm.cmd install -g %NODE%
+echo.
+exit /b
+
+:: --------------------------------------------------------------------------}}}
+:: {{{ Subroutine: pip_with_prompt
+::     %1 = winget package ID (e.g., Git.Git)
+
+:pip_with_prompt
+set "PIP=%~1"
+set /p ANSWER=Install "%PIP%?" [y/N]:
+if /I "%ANSWER%"=="N" (
+  echo ❌ Skipped %PIP%
+  echo.
+  exit /b
+)
+
+echo 🛠 Installing %PIP%...
+call python -m pip install --upgrade pip
+call python -m pip install --upgrade pynvim
+echo.
+exit /b
 
 :: --------------------------------------------------------------------------}}}
