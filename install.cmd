@@ -63,6 +63,9 @@ call :winget_with_prompt junegunn.fzf
 echo 🖥️ Installing Ghostscript...
 call :winget_with_prompt PaperCutSoftware.GhostTrap
 
+echo 🖥️ Installing GoLang.Go...
+call :winget_with_prompt GoLang.Go
+
 echo 🖥️ Installing ImageMagick...
 call :winget_with_prompt ImageMagick.ImageMagick
 
@@ -77,6 +80,9 @@ call :winget_with_prompt LLVM.LLVM
 
 echo 🖥️ Installing Microsoft PowerToys...
 call :winget_with_prompt Microsoft.PowerToys
+
+echo 🖥️ Installing NodeJS...
+call :winget_with_prompt OpenJS.NodeJS
 
 echo 🖥️ Installing ripgrep...
 call :winget_with_prompt BurntSushi.ripgrep.MSVC
