@@ -78,6 +78,9 @@ call :winget_with_prompt DEVCOM.LuaJIT
 echo 🖥️ Installing LLVM...
 call :winget_with_prompt LLVM.LLVM
 
+echo 🖥️ Installing Meld...
+call :winget_with_prompt Meld.Meld
+
 echo 🖥️ Installing Microsoft PowerToys...
 call :winget_with_prompt Microsoft.PowerToys
 
